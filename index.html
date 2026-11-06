@@ -339,6 +339,46 @@
         html { scroll-behavior: auto; }
         * { transition: none !important; }
       }
+    
+      /* Menú lateral móvil (hamburguesa) */
+      .menu-btn { display: none; }
+      .nav-backdrop { display: none; }
+      @media (max-width: 900px) {
+        .menu-btn {
+          display: grid; place-items: center; margin-left: auto; flex: none;
+          width: 44px; height: 44px; border: 0; border-radius: 12px; cursor: pointer;
+          color: #fff; background: linear-gradient(135deg, #17bd85, #07704c);
+          box-shadow: 0 6px 16px -6px rgba(7, 112, 76, 0.55);
+        }
+        .menu-btn svg { width: 22px; height: 22px; }
+        nav.main-nav {
+          position: fixed; top: 0; right: 0; z-index: 100;
+          height: 100dvh; width: min(320px, 85vw);
+          margin: 0; padding: 76px 20px 28px;
+          flex-direction: column; flex-wrap: nowrap; gap: 4px;
+          background: var(--bg-soft); border-left: 1px solid var(--line);
+          box-shadow: -18px 0 44px rgba(0, 0, 0, 0.35);
+          transform: translateX(105%); transition: transform 0.28s ease;
+          overflow-y: auto;
+        }
+        nav.main-nav a { display: block; padding: 13px 14px; font-size: 1rem; border-radius: 10px; }
+        nav.main-nav a:hover { background: var(--surface-2); }
+        nav.main-nav a[aria-current="page"] { background: var(--surface-2); color: var(--accent); }
+        body.nav-open { overflow: hidden; }
+        body.nav-open nav.main-nav { transform: translateX(0); }
+        .nav-backdrop {
+          display: block; position: fixed; inset: 0; z-index: 90;
+          background: rgba(0, 0, 0, 0.5); border: 0; padding: 0; cursor: pointer;
+          opacity: 0; pointer-events: none; transition: opacity 0.28s ease;
+        }
+        body.nav-open .nav-backdrop { opacity: 1; pointer-events: auto; }
+        .drawer-close {
+          position: absolute; top: 16px; right: 16px;
+          width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line);
+          background: var(--surface-2); color: var(--ink); font-size: 1.3rem; line-height: 1;
+          cursor: pointer;
+        }
+      }
     </style>
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "calculadorac.com", "url": "https://calculadorac.com/", "description": "Calculadora online gratis de calculadorac.com: calculadora estándar y científica, calculadora de porcentajes, calculadora de IVA de Argentina y regla de tres. Rápida, precisa, sin registro y 100% privada.", "inLanguage": "es"}, {"@type": "WebApplication", "name": "calculadorac.com — Calculadora Online", "url": "https://calculadorac.com/", "description": "Calculadora online gratis de calculadorac.com: calculadora estándar y científica, calculadora de porcentajes, calculadora de IVA de Argentina y regla de tres. Rápida, precisa, sin registro y 100% privada.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "inLanguage": "es", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "ARS"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Para qué sirve esta herramienta?", "acceptedAnswer": {"@type": "Answer", "text": "La calculadora online gratis te permite realizar las operaciones aritméticas básicas: sumar, restar, dividir y multiplicar. Si necesitás más funciones, podés utilizar nuestra calculadora científica, con trigonometría, logaritmos, potencias y raíces, todo en esta misma página."}}, {"@type": "Question", "name": "¿Cómo se calcula el IVA de un precio?", "acceptedAnswer": {"@type": "Answer", "text": "Si el precio es neto, el IVA es monto × 0,21 y el total es monto × 1,21. Si el precio ya incluye IVA, el neto se obtiene dividiendo por 1,21: por ejemplo, un total de $12.100 equivale a $10.000 netos más $2.100 de IVA. La calculadora de IVA de arriba hace ambas cuentas automáticamente."}}, {"@type": "Question", "name": "¿Puedo usar la calculadora con el teclado?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Escribí los números y operadores directamente (+, −, *, /), presioná Enter o = para ver el resultado, Esc para borrar todo y Retroceso para corregir el último dígito. En modo científico también acepta paréntesis y la tecla ^ para potencias."}}, {"@type": "Question", "name": "¿Mis cálculos quedan guardados?", "acceptedAnswer": {"@type": "Answer", "text": "El historial vive solo en esta pestaña mientras la tengas abierta: no enviamos ni guardamos tus operaciones en ningún servidor. Al cerrar la página, el historial desaparece."}}, {"@type": "Question", "name": "¿Cómo calculo un porcentaje rápido?", "acceptedAnswer": {"@type": "Answer", "text": "Para saber cuánto es el X% de un número, multiplicá el número por X y dividí por 100: el 20% de 250 es 250 × 20 ÷ 100 = 50. Con la calculadora estándar también podés escribir 250 × 20% y obtener el resultado al instante."}}, {"@type": "Question", "name": "¿Funciona en el celular?", "acceptedAnswer": {"@type": "Answer", "text": "Sí, la página está diseñada para pantallas chicas y grandes: la calculadora, los porcentajes y el IVA se adaptan al ancho de tu dispositivo y los botones tienen el tamaño justo para usarlos con el dedo."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://calculadorac.com/"}]}]}</script>
   </head>
@@ -351,7 +391,8 @@
           </span>
           <span class="name">calculadorac.com<em>.</em></span>
         </a>
-        <nav class="main-nav" aria-label="Herramientas">
+        <button class="menu-btn" id="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+        <nav class="main-nav" id="main-nav" aria-label="Herramientas"><button class="drawer-close" id="drawer-close" type="button" aria-label="Cerrar menú">×</button>
           <a href="#calculadora">Calculadora</a>
           <a href="calcular-porcentaje.html">Porcentajes</a>
           <a href="calculadora-iva.html">IVA Argentina</a>
@@ -362,6 +403,7 @@
         </nav>
       </div>
     </header>
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
     <main id="top">
       <!-- ============ HERO + CALCULATOR ============ -->
@@ -604,23 +646,7 @@
     </main>
 
     <!-- ============ MARCA ============ -->
-    <section class="brand-band" aria-label="Sobre calculadorac.com">
-      <div class="band-in">
-        <div class="band-brand">
-          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M13 19h22M13 30h13" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><circle cx="32" cy="30" r="2.8" fill="#fff"/></svg></span>
-          <div>
-            <b>calculadorac.com.</b>
-            <span class="tag">Calculadoras online para Argentina</span>
-          </div>
-        </div>
-        <ul class="band-values">
-          <li><b>15 dígitos</b>de precisión</li>
-          <li><b>Sin registro</b>ni descargas</li>
-          <li><b>100% privado</b>todo en tu navegador</li>
-          <li><b>Gratis</b>para siempre</li>
-        </ul>
-      </div>
-    </section>
+    
 
     <footer>
       <div class="footer-in">
@@ -1104,5 +1130,26 @@
       buildKeys();
       renderScreen();
     </script>
-  </body>
+  
+    <script>
+      (function () {
+        var btn = document.getElementById("menu-btn");
+        var nav = document.getElementById("main-nav");
+        var backdrop = document.getElementById("nav-backdrop");
+        var closeBtn = document.getElementById("drawer-close");
+        if (!btn || !nav) { return; }
+        function setOpen(open) {
+          document.body.classList.toggle("nav-open", open);
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          btn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+        }
+        btn.addEventListener("click", function () { setOpen(!document.body.classList.contains("nav-open")); });
+        if (closeBtn) { closeBtn.addEventListener("click", function () { setOpen(false); }); }
+        if (backdrop) { backdrop.addEventListener("click", function () { setOpen(false); }); }
+        nav.addEventListener("click", function (e) { if (e.target.closest("a")) { setOpen(false); } });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setOpen(false); } });
+        window.addEventListener("resize", function () { if (window.innerWidth > 900) { setOpen(false); } });
+      })();
+    </script>
+</body>
 </html>
