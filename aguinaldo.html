@@ -164,6 +164,19 @@ footer{margin-top:0;border-top:1px solid var(--line);background:var(--bg-soft)}
           cursor: pointer;
         }
       }
+    
+      /* Correcciones: pie fino + logo móvil + menú por encima del fondo */
+      .footer-in.slim { display: block; text-align: center; padding: 18px 20px 22px; }
+      .footer-in.slim small { font-size: 0.85rem; color: var(--ink-2); }
+      .footer-in.slim a { margin: 0 4px; }
+      body.nav-open header { z-index: 110; }
+      @media (max-width: 900px) {
+        .brand span.name { display: inline; }
+        .brand-mark { background: transparent; box-shadow: none; }
+        .brand-mark svg * { stroke: #17bd85; }
+        .brand-mark svg circle { fill: #17bd85; }
+        nav.main-nav a { color: var(--ink); }
+      }
     </style>
   </head>
   <body>
@@ -409,24 +422,8 @@ footer{margin-top:0;border-top:1px solid var(--line);background:var(--bg-soft)}
     
 
     <footer>
-      <div class="footer-in">
-        <div class="foot-brand">
-          <span class="brand-mark small" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M13 19h22M13 30h13" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><circle cx="32" cy="30" r="2.8" fill="#fff"/></svg></span>
-          <span><strong>calculadorac.com.</strong> Calculadoras online gratuitas, hechas para Argentina.<br /><small>© 2026 calculadorac.com · Todos los cálculos se hacen en tu navegador.</small></span>
-        </div>
-        <nav aria-label="Herramientas">
-          <a href="index.html">Calculadora</a>
-          <a href="calcular-porcentaje.html">Porcentajes</a>
-          <a href="calculadora-iva.html">IVA</a>
-          <a href="calculadora-cientifica.html">Científica</a>
-          <a href="regla-de-tres.html">Regla de tres</a>
-        </nav>
-        <nav aria-label="calculadorac.com">
-          <a href="acerca-de.html">Acerca de</a>
-          <a href="contacto.html">Contacto</a>
-          <a href="privacidad.html">Privacidad</a>
-          <a href="terminos.html">Términos</a>
-        </nav>
+      <div class="footer-in slim">
+        <small>&copy; 2026 calculadorac.com &middot; <a href="privacidad.html">Privacidad</a> &middot; <a href="terminos.html">T&eacute;rminos</a> &middot; <a href="contacto.html">Contacto</a></small>
       </div>
     </footer>
   
